@@ -1,0 +1,24 @@
+# run with $ docker-compose up
+version: '3'
+services: 
+  # The actual service
+  web: # name for app
+    build:
+      context: .
+      dockerfile: Dockerfile.dev # spcify dockerfile
+    ports: 
+      - "3000:3000" # open localport:containerport
+    volumes: 
+      - /app/node_modules # don't check here
+      - .:/app # map local changes in . to /app in container
+  
+  # Testing
+  tests: # name for app
+    build:
+      context: .
+      dockerfile: Dockerfile.dev # spcify dockerfile
+    volumes: 
+      - /app/node_modules # don't check here
+      - .:/app # map local changes in . to /app in container
+    command: ["npm", "run", "test"]
+
